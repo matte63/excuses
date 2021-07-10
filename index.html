@@ -83,11 +83,24 @@
 
     </script>
     <style media="screen">
+      body[theme=dark] {
+        color: #fff;
+        background: #000;
+      }
+
+      body[theme=light] {
+        color: #000;
+        background: #eee;
+      }
+
       body,
       html {
         color: #fff;
         background: #000;
         font-family: 'Roboto', sans-serif;
+      }
+
+      main {
         margin: auto;
         max-width: 512px;
       }
@@ -104,7 +117,7 @@
       }
 
       p#id {
-        margin: 8px;
+        margin: 16px 8px;
         opacity: .7;
         position: relative;
         font-size: 24px;
@@ -117,7 +130,8 @@
         cursor: pointer;
         font-weight: 500;
         font-size: 14px;
-        padding: 10px 8px;
+        line-height: 36px;
+        padding: 0 12px;
         border: none;
         border-radius: 3px;
         color: currentColor;
@@ -156,15 +170,19 @@
     </style>
   </head>
 
-  <body onload="a()">
-    <h1>Excuses</h1>
-    <p id="id"></p>
-    <button type="button"
-            name="button"
-            onclick="a()">Update</button>
-    <button type="button"
-            name="button"
-            onclick="c()">Copy</button>
+  <body onload="a()"
+        theme="dark">
+    <main>
+      <h1>Excuses</h1>
+      <p id="id"></p>
+      <button type="button"
+              name="button"
+              onclick="a()">Update</button>
+      <button type="button"
+              name="button"
+              onclick="c()">Copy</button>
+    </main>
+
   </body>
 
 </html>
