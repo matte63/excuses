@@ -20,7 +20,6 @@
             defer>
       function excuse_generator() {
         var e = excuses.intro[Math.floor(Math.random() * excuses.intro.length)] + ' ' + excuses.scapegoat[Math.floor(Math.random() * excuses.scapegoat.length)] + ' ' + excuses.delay[Math.floor(Math.random() * excuses.delay.length)] + '.';
-
         return e;
       }
 
@@ -29,12 +28,30 @@
 
         document.getElementById('id').innerHTML = s;
         console.log(s);
-
       }
 
       function c() {
         str = document.getElementById('id').innerHTML;
         b(str);
+        var a = document.getElementsByClassName('alert')[0];
+        if (a != null)
+          document.getElementsByTagName('main')[0].removeChild(a);
+        const cb = document.createElement('div');
+        cb.classList = "alert";
+        cb.innerHTML = "Copied to clipboard";
+        cb.style = "opacity: 0";
+        document.getElementsByTagName('main')[0].appendChild(cb);
+        setTimeout(function() {
+          cb.style = "opacity: 1";
+        }, 0);
+        setTimeout(function() {
+          cb.style = "opacity: 0";
+        }, 1800);
+        setTimeout(function() {
+          var cu = document.getElementsByClassName('alert')[0];
+          if (cu != null)
+            document.getElementsByTagName('main')[0].removeChild(cu);
+        }, 2000);
       }
 
       function b(str) {
@@ -120,6 +137,7 @@
       }
 
       main {
+        position: relative;
         margin: 96px auto;
         max-width: 512px;
       }
@@ -146,7 +164,7 @@
       }
 
       .buttons {
-        margin: 0 8px;
+        margin: 0 16px;
         white-space: normal;
         user-select: none;
       }
@@ -169,7 +187,7 @@
         text-transform: uppercase;
         overflow: hidden;
         position: relative;
-        margin: 4px;
+        margin: 0 4px 0 0;
       }
 
       button:disabled {
@@ -197,6 +215,18 @@
         opacity: .08;
       }
 
+      .alert {
+        user-select: none;
+        min-height: 48px;
+        margin: 16px;
+        padding: 14px 16px;
+        box-sizing: border-box;
+        background: #8882;
+        border-radius: 3px;
+        /*box-shadow: 0 6px 8px #0001, 0 10px 12px #0001;*/
+        transition: .2s opacity;
+      }
+
     </style>
   </head>
 
@@ -216,8 +246,13 @@
                 name="button"
                 onclick="t()">theme</button>
       </div>
+      <!--div class="alert">
+        Copied to clipboard
+      </div-->
 
     </main>
+
+
 
   </body>
 
