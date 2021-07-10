@@ -14,11 +14,10 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
           rel="stylesheet">
-    <script type="text/javascript">
+    <script type="text/javascript"
+            defer>
       function excuse_generator() {
-        var e = '';
-
-        e = excuses.intro[Math.floor(Math.random() * excuses.intro.length)] + ' ' + excuses.scapegoat[Math.floor(Math.random() * excuses.scapegoat.length)] + ' ' + excuses.delay[Math.floor(Math.random() * excuses.delay.length)] + '.';
+        var e = excuses.intro[Math.floor(Math.random() * excuses.intro.length)] + ' ' + excuses.scapegoat[Math.floor(Math.random() * excuses.scapegoat.length)] + ' ' + excuses.delay[Math.floor(Math.random() * excuses.delay.length)] + '.';
 
         return e;
       }
@@ -43,6 +42,18 @@
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
+      }
+
+      function init() {
+        a();
+        var tu = localStorage.getItem('theme');
+        document.body.setAttribute('theme', tu);
+      }
+
+      function t() {
+        var th = document.body.getAttribute('theme') == 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('theme', th);
+        localStorage.setItem('theme', th);
       }
 
       var excuses = {
@@ -93,20 +104,26 @@
         background: #eee;
       }
 
-      body,
-      html {
+      body {
+        margin: 0;
         color: #fff;
         background: #000;
         font-family: 'Roboto', sans-serif;
+        transition: ease-in-out .2s background;
+      }
+
+      ::selection {
+        color: currentColor;
+        background: #8886;
       }
 
       main {
-        margin: auto;
+        margin: 96px auto;
         max-width: 512px;
       }
 
       h1 {
-        margin: 96px 8px 24px;
+        margin: 24px 8px 24px;
         font-weight: 400;
         font-family: 'Roboto Mono', monospace;
       }
@@ -179,7 +196,7 @@
     </style>
   </head>
 
-  <body onload="a()"
+  <body onload="init()"
         theme="dark">
     <main>
       <h1>Excuses</h1>
@@ -191,6 +208,9 @@
         <button type="button"
                 name="button"
                 onclick="c()">Copy</button>
+        <button type="button"
+                name="button"
+                onclick="t()">theme</button>
       </div>
 
     </main>
