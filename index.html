@@ -18,13 +18,8 @@
           rel="stylesheet">
     <script type="text/javascript"
             defer>
-      function excuse_generator() {
-        var e = excuses.intro[Math.floor(Math.random() * excuses.intro.length)] + ' ' + excuses.scapegoat[Math.floor(Math.random() * excuses.scapegoat.length)] + ' ' + excuses.delay[Math.floor(Math.random() * excuses.delay.length)] + '.';
-        return e;
-      }
-
       function a() {
-        var s = excuse_generator()
+        var s = random_excuse()
 
         document.getElementById('id').innerHTML = s;
         console.log(s);
@@ -75,41 +70,85 @@
         localStorage.setItem('theme', th);
       }
 
-      var excuses = {
-        intro: ['Sorry I can\'t come',
-          'Please forgive my absence',
-          'This is going to sound crazy but',
-          'Get this:',
-          'I can\'t go because',
-          'I know you\'re going to hate me but',
-          'I was minding my own business and boom!',
-          'I feel terrible but',
-          'I regretfully cannot attend',
-          'This is going to sound like an excuse but'
+      var data = {
+        scuse: ['Non ci crederai mai ma', 'Perdona la mia assenza', 'Ti sembrerà folle ma', 'Non posso venire perché', 'So che mi odierai ma', 'Mi sento tremendamente in colpa ma', 'Questo ti suonerà come una scusa ma',
+          'Mi stavo facendo i fatti miei e boom!'
         ],
-        scapegoat: ['my nephew',
-          'the ghost of Hitler',
-          'the Pope',
-          'my ex',
-          'a high school marching band',
-          'Dan Rather',
-          'a sad clown',
-          'the kid from Air Bud',
-          'a professional cricket team',
-          'my Tinder date'
-        ],
-        delay: ['just shit the bed',
-          'died in front of me',
-          'won\'t stop telling me knock knock jokes',
-          'is having a nervous breakdown',
-          'gave me syphilis',
-          'poured lemonade in my gas tank',
-          'stabbed me',
-          'found my box of human teeth',
-          'stole my bicycle',
-          'posted my nudes on Instagram'
-        ]
-      };
+        prima_parte: {
+          soggetti: ['il Papa', 'il mio cane', 'le farfalle', 'il mio appuntamento di Tinder', 'il gatto della mia ex', 'la mia ex'],
+          verbi: ["ha aggiunto", "sta aggiungendo", "assume", "sta assumendo", "ascolta", "ha ascoltato", "alza", "ha alzato", "sta alzando", "ha affrontato", "sta affrontando", "aspetta", "sta aspettando", "batte", "ha battuto", "chiama",
+            "ha chiamato", "sta chiamando", "ha chiuso", "sta chiudendo", "campiona", "sta campionando", "dirige", "ha diretto", "espropria", "ha espropriato", "sta espropriando", "ha girato", "sta girando", "fissa", "sta fissando", "mescola",
+            "ha mescolato", "filma", "ha filmato", "sta filmando", "ha distrutto", "sta distruggendo", "demolisce", "sta demolendo", "usurpa", "ha usurpato", "genera", "ha generato", "sta generando", "ha contato", "sta contando", "spende",
+            "sta spendendo", "divide", "ha diviso", "offre", "ha offerto", "sta offrendo", "ha pagato", "sta pagando", "lega", "sta legando", "restaura", "ha restaurato", "annota", "ha annotato", "sta annotando", "ha creato", "sta creando",
+            "lavora", "sta lavorando", "combatte", "ha combattuto", "semina", "ha seminato", "sta seminando", "ha ricoperto", "sta ricoprendo", "denuda", "sta denudando", "esprime", "ha espresso", "cerca", "ha cercato", "sta cercando",
+            "ha cablato", "sta cablando", "accompagna", "sta accompagnando", "ammazza", "ha ammazzato", "giudica", "ha giudicato", "sta giudicando", "ha difeso", "sta difendendo", "stampa", "sta stampando", "assicura", "ha assicurato",
+            "pubblica", "ha pubblicato", "sta pubblicando", "ha allenato", "sta allenando", "studia", "sta studiando", "smercia", "ha smerciato", "commercia", "ha commerciato", "sta commerciando", "ha analizzato", "sta analizzando", "copre",
+            "sta coprendo", "cura", "ha curato", "getta", "ha gettato", "sta gettando", "ha elaborato", "sta elaborando", "commenta", "sta commentando", "beve", "ha bevuto", "carica", "ha caricato", "sta caricando", "ha dato", "sta dando",
+            "insegue", "sta inseguendo"
+          ],
+          oggetti: ['dei vecchi dischi', 'le ciabatte', 'il pullman del Parma', 'le sedie', 'il tavolo da ping-pong', 'il divanetto', 'le discoteche', 'il mojito', 'la carbonara', 'la panna', 'il peperoncino', 'un vaso di peperoncini',
+            '237 albicocche', 'il clarinetto', 'la chitarra di Mark', 'la terra', 'il concime', 'i nonni di Moro', 'le zie di Mark', 'lo zio di Mark', 'il fumettista bravo', 'una buca', 'decine di copie', 'una testata', 'una mano', 'il terrore',
+            'il pane', 'l\'ansia da prestazione', 'il karma', 'i diversi usi del pene', 'l\'erba gatta', 'l\'intero medio Oriente', 'il Caucaso', 'la baia di Sorrento', 'le termiti', 'il formicaio', 'i gatti', 'il Gatto', 'l\'erba',
+            'il seno prorompente di Mark', 'la corriera', 'il campo', 'la colza', 'il mais', 'il frumento', 'le patate', 'il bestiame', 'l\'ovile', 'le pecore', 'il cacao', 'il pascolo', 'la mietitrebbia', 'il trattore', 'la mangiatoia',
+            'le mucche', 'il pastore', 'la contadina', 'Morelli', 'un passante', 'il terreno', 'l\'impasto del pane', 'la casa di Moro', 'un capitale enorme'
+          ],
+          facer: ['ha fatto', 'sta facendo'],
+          cose: ['l\'accompagnatore turistico', 'il trapezista', 'l\'adattatore dialoghista', 'il persecutore di opossum', 'l\'addetto al controllo di gestione e contabilità analitica', 'l\'addetto alle pubbliche relazioni', 'la foca monaca',
+            'l\'addetto alla gestione delle risorse umane', 'il frate occasionale', 'l\'addetto stampa', 'l\'agente di assicurativo', 'l\'agronomo', 'l\'allenatore in seconda', 'l\'amministratore', 'l\'analista ambientale', 'l\'arbitro',
+            'l\'archeologo', 'l\'archivista', 'l\'artist manager', 'l\'attore', 'il benvenuto', 'l\'assistente sociale', 'l\'audiometrista', 'l\'avvocato', 'il bibliotecario', 'il biochimico', 'il biofisico', 'il biologo marino', 'il botanico',
+            'il broker', 'lo chef', 'il chimico', 'il chimico industriale', 'il commercialista', 'il commesso di libreria', 'il comunicatore pubblico', 'il consulente', 'il copywriter', 'il critico d\'arte', 'il curatore editoriale',
+            'il dentista', 'il detective privato', 'il direttore artistico', 'direttore di filiale', 'il passante', 'l\'economista', 'l\'enologo', 'l\'educatore sessuale', 'l\'erborista', 'l\'etimologo', 'l\'etnologo', 'l\'etologo',
+            'l\'event manager', 'il filologo', 'il filosofo', 'il financial analyst', 'il fiscalista', 'il fisico', 'il fisioterapista', 'il fitness manager', 'il funzionario', 'il geografo', 'il geologo', 'il giudice sportivo', 'il grecista',
+            'la guida turistica', 'il giornalista', 'l\'igienista dentale', 'l\'imprenditore', 'l\'imprenditore sociale', 'l\'infermiere', 'l\'informatore', 'l\'insegnate di lingue', 'l\'insegnante di storia', 'l\'insegnante privato',
+            'l\'IT security specialist', 'il latinista', 'il linguista', 'il logopedista', 'il manager', 'il matematico', 'il mediatore', 'il medico di famiglia', 'il medico veterinario', 'il mentore', 'il meteorologo', 'il notaio',
+            'il nutrizionista', 'l\'odontotecnico', 'l\'organizzatore di eventi l\'orientatore', 'l\'ostetrico', 'l\'opinionista', 'l\'osservatore sportivo', 'il paesaggista', 'il paleontologo', 'il perito minerario', 'il politologo',
+            'il product manager', 'il professore di tedesco', 'il promoter turistico', 'lo psicologo', 'il quality manager', 'il rappresentante artistico', 'il redattore capo', 'il regista', 'il responsabile acquisti', 'il restauratore',
+            'il revisore legale', 'il revisore contabile', 'il ricercatore', 'il rilevatore professionale', 'il reporter', 'lo sceneggiatore', 'lo scenografo', 'lo scrittore', 'il sociologo', 'il sound designer', 'il software developer',
+            'lo statistico', 'lo storico', 'lo storiografo', 'il subagente assicurativo', 'il tecnico del suono', 'il tecnologo alimentare', 'il traduttore', 'il tributarista', 'il veterinario', 'il videomaker', 'il videoreporter',
+            'il web designer', 'il web content manager', 'lo zoologo', 'il subalterno'
+          ]
+        },
+        seconda_parte: {
+          complementi: ['in Angola', 'in Messico', 'con la zia', 'a Monza', 'per le ragazze in divisa', 'in missione di pace', 'a casa di Mark', 'col produttore di angurie', 'solo occasionalmente', 'oziando praticamente tutto il tempo',
+            'dentro Takedown RS', 'sotto i ponti', 'al tramonto', 'in spiaggia a Ostia', 'a Milano marittima', 'sugli ombrellini da cocktail', 'nei toga party', 'alle lezioni di yoga', 'nella sede della EA', 'a Westminster', 'su Marte',
+            'al sole dei Balcani', 'in Congo', 'a New Delhi', 'in Costa d\'Avorio', 'alle partite della nazionale portoghese', 'sui comignoli di Parigi', 'a casa di Mark', 'nella batcaverna', 'dal balcone di Lyezar', 'a Genova',
+            'per il festival di Sanremo', 'a Sanremo', 'nei sobborghi di Monza', 'sul Monviso', 'in Antartide', 'nei pressi del Po', 'a Venezia', 'sui parigini', 'nel caffè', 'nella bocca di un pinguino', 'in quinta elementare',
+            'accanto a una renna', 'sulla cima del Monte Bianco', 'per la legge sull\'IVA', 'all\'Agenzia delle Entrate', 'per la fame nel mondo', 'per togliere i cetrioli sott\'aceto', 'nella tana dell\'orso', 'per la cena', 'per colazione',
+            'in piedi', 'seduto a vedere il Pescara', 'in treno a Pescasseroli', 'a Est dell\'appennino', 'a Sud della Toscana', 'vestito a modo', 'nella foresta del Borneo', 'a Ragusa', 'per ottenere la cittadinanza', 'per i più deboli',
+            'per una multinazionale', 'in pigiama', 'sotto il cielo d\'Oriente', 'per non sedersi', 'perché sì', 'data la sua capacità', 'presso il Comune', 'in Uzbekistan', 'in Azerbaijan', 'a Baku', 'negli Stati Uniti', 'a Ferrara',
+            'con gli zii di Moro', 'nella macchina di Moro', 'con la zia', 'con lo zio', 'con i genitori', 'con il suo pappagallo', 'con Obama', 'per la moglie del presidente francese', 'per Michelle Obama', 'in diretta con Mentana',
+            'per seguire CKibe', 'con la nonna di Bush', 'dal Maggio 2008', 'nel suo primo Pandino', 'con il maglione a collo alto', 'con la sciarpa di Harry Potter', 'con il guantone da baseball', 'a torso nudo', 'in un\'aula di tribunale',
+            'a Verona', 'al Palio di Siena', 'in sella ad un cervo', 'in calzamaglia', 'con il cappello di Babbo Natale', 'in infradito', 'con le infradito e i calzini', 'con sandali e calzini bianchi', 'al muro', 'in pensione', 'sui pinguini',
+            'per aprire tutti i Chakra', 'superando anche le aspettative', 'in una puntata di UNO', 'col suo paesano preferito', 'sotto la Contessa', 'sopra al Conte', 'nel campo di barbabietole', 'aspettando la Contessa'
+          ]
+        }
+      }
+
+      function random_excuse() {
+        var text = "";
+        rand_boolean = Math.random() >= Math.random();
+        var sks = Math.floor(Math.random() * data.scuse.length);
+        var scusa = data.scuse[sks];
+        var s = Math.floor(Math.random() * data.prima_parte.soggetti.length);
+        var soggetto = data.prima_parte.soggetti[s];
+        if (rand_boolean) {
+          var v = Math.floor(Math.random() * data.prima_parte.verbi.length);
+          var verbo = data.prima_parte.verbi[v];
+          var o = Math.floor(Math.random() * data.prima_parte.oggetti.length);
+          var oggetto = data.prima_parte.oggetti[o];
+          parte1 = verbo + " " + oggetto;
+        } else {
+          var f = Math.floor(Math.random() * data.prima_parte.facer.length);
+          var facere = data.prima_parte.facer[f];
+          var cs = Math.floor(Math.random() * data.prima_parte.cose.length);
+          var cosa = data.prima_parte.cose[cs];
+          parte1 = facere + " " + cosa;
+        }
+        var c = Math.floor(Math.random() * data.seconda_parte.complementi.length);
+        var complemento = data.seconda_parte.complementi[c];
+        text = scusa + " " + soggetto + " " + parte1 + " " + complemento + " ";
+        return text;
+      }
 
     </script>
     <style media="screen">
